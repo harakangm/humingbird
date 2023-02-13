@@ -37,8 +37,15 @@
 
 		});
 
+		
+		
+		
+
+		
 		/* 옷에대한 정보를 보내는 함수 */
 		function itemUpload() {
+			
+			
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -71,6 +78,7 @@
 				} ]
 			};
 
+			
 			if ($(".form-select option:selected").val() == "BOTTOM") {
 				var paramData = {
 					brandName : $("#brandName").val(),
@@ -154,32 +162,42 @@
 				};
 			}
 
-			var param = JSON.stringify(paramData);
-
-			console.log(param);
-
+								
+			var formData = new FormData();
+			
+			for(let i = 1; i <= 5; i++){
+				console.log($('#itemImgFile'+i))
+				if($('#itemImgFile'+i)[0].files[0] != null){
+					 var file = $('#itemImgFile'+i)[0].files[0];
+					 formData.append('ImgFile', file);
+				}
+			}			
+		    
+		    formData.append("dto", new Blob([JSON.stringify(paramData)], {type: "application/json"}));
+		    
+		    
+		 		
 			$.ajax({
 				url : "/newItem/test",
 				type : "POST",
-				contentType : "application/json",
-				data : param,
- 	/* 	 		beforeSend : function(xhr) {
+			      data: formData,
+			      contentType: false,
+			      processData: false,
+			      cache: false,
+ 			      enctype: 'multipart/form-data', 
+ 			     async:false,
+	 		beforeSend : function(xhr) {
 
 					xhr.setRequestHeader(header, token);
-				},  */ 
-				dataType : "json",
+				},  
 				cache : false,
 				success : function(result, status) {
 					alert("주문이 완료 되었습니다.");
-					location.href = '/';
+					location.href = '/newItem/newItemView';
 				},
-				error : function(jqXHR, status, error) {
-					if (jqXHR.status == '401') {
-						alert('로그인 후 이용해주세요');
-						location.href = '/members/login';
-					} else {
-						alert(jqXHR.responseText + '여긴가?');
-					}
+				error : 
+					function( request,jqXHR, status, error) {
+				    alert(jqXHR.responseText+"모든데이터를 입력해주세요");
 				}
 
 			});
@@ -394,7 +412,7 @@
 								<label for="formFile" class="form-label custom-file-label"
 									th:text="상품이미지 + ${num}"></label> <input
 									class="form-control custom-file-input" type="file"
-									id="itemImgFile" name="itemImgFile">
+									th:id="itemImgFile+ ${num}" th:name="itemImgFile+ ${num}">
 							</div>
 						</div>
 					</div>

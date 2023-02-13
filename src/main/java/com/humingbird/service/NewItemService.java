@@ -30,24 +30,26 @@ public class NewItemService {
 	private final BottomNewItemRepository bottomNewItemRepository;
 	private final OuterNewItemRepository outerNewItemRepository;
 	private final TopNewItemRepository topNewItemRepository;
-	private NewItemImgService newItemImgService;
+	private final NewItemImgService newItemImgService;
 	
 	//신상 정보 이미지 등록 메소드
 	public Long saveImg(List<MultipartFile> itemImgFileList , NewItem newItem) throws Exception {		
-		System.out.println("dasdsafdsgfdjghksfdjgjshkdlfjghkldsjhklgffdjghksfdjhk");
 		//이미지 등록
-		
+		System.out.println(itemImgFileList.size());
 		for(int i = 0;  i<itemImgFileList.size(); i++ ) {
 			NewItemImg newItemImg = new NewItemImg();
 			newItemImg.setNewitem(newItem); // 외래키등록
 			
 			//첫번째 이미지 일때 대표 상품 이미지 여부 지정
 			if(i == 0) {
+
 				newItemImg.setRepimgYn("Y");
 			}else {
 				newItemImg.setRepimgYn("N");
 			}
+	
 			newItemImgService.saveItemImg(newItemImg, itemImgFileList.get(i));
+
 		}
 		
 		return newItem.getId();

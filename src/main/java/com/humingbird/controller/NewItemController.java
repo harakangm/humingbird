@@ -1,7 +1,10 @@
 package com.humingbird.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,24 +58,30 @@ public class NewItemController {
 	}
 
 	// 일단 아이템 저장 테스트
-	@PostMapping("/test")
-	@ResponseBody String test(@RequestBody @Validated NewItemFormDto newItemFormDto, BindingResult bindingResult
-			, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model) {
-			System.out.println("처음부터인가?");
+	@PostMapping(value =  "/test" )
+	@ResponseBody public ResponseEntity test(@RequestPart("dto") @Valid NewItemFormDto newItemFormDto, BindingResult bindingResult
+			, @RequestPart(value = "ImgFile",required = false) List<MultipartFile> itemImgFileList, Model model,Principal principal) {
+				
+		
+	       if(bindingResult.hasErrors()){
+	            StringBuilder sb = new StringBuilder();
+	            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
-			if(bindingResult.hasErrors()) {
-				return "newItem/nItemForm";
-			}
+	            for (FieldError fieldError : fieldErrors) {
+	                sb.append(fieldError.getDefaultMessage());
+	            }
+
+	            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+	        }
 			
 			//첫번째 이미지가 있는지 검사
 			if(itemImgFileList.get(0).isEmpty() && newItemFormDto.getId() == null) {
 				model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
-				return "newItem/nItemForm";
+	
 			}
 			
 			//맵퍼로 dto와 entity 매핑
 			NewItem newItem = newItemFormDto.createNewItem();
-			
 
 			try {
 				if (newItemFormDto.getCategory() == Category.OUTER) {//아우터 테이블입력
@@ -95,21 +106,22 @@ public class NewItemController {
 					newItemService.saveTopItem(newItem, topNewItemList,itemImgFileList);
 
 				} else { // 하의 테이블 입력
-
+					
 					ArrayList<BottomNewItem> bottomNewItemList = new ArrayList<>();
 
 					for (BottomNewItemDto dto : newItemFormDto.getBottomNewItemDtoList()) {
 						BottomNewItem bottomNewItem = BottomNewItem.createBottomNewItem(dto, newItem);
 						bottomNewItemList.add(bottomNewItem);
 					}
+					
 					newItemService.saveBottomItem(newItem, bottomNewItemList,itemImgFileList);
 				}
 
 			} catch (Exception e) {
-				model.addAttribute("errorMessage", "상품 등록 중 에러가 발생했습니다.");
-				return "item/itemForm";
+				model.addAttribute("errorMessage", "게시글 등록중 에러 발생.");
+	            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 			}
 		
-		return "main";
+			   return new ResponseEntity(HttpStatus.OK);
 	}
 }
