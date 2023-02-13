@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+.container2 {
+	display: grid;
+	grid-template-columns: 0.7fr 1.4fr 1.5fr 0.7fr;
+	grid-template-rows: 0.2fr 0.5fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	justify-items: center;
+	align-items: center;
+	grid-template-areas: "login input1 input1 ." "login item1 item3 .";
+}
+
+.input1 {
+	grid-area: input1;
+}
+
+.login {
+	justify-self: end;
+	grid-area: login;
+}
+
+.item3 {
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-auto-columns: 1fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	justify-self: start;
+	grid-area: item3;
+}
+
+.input {
+	grid-area: 2/1/3/2;
+}
+
+button {
+	background-color: #565cfb;
+	border: none;
+	color: white;
+	padding: 15px 30px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	width: 300px;
+	border-radius: 20px;
+}
+
+.item1 {
+	justify-self: center;
+	align-self: center;
+	grid-area: item1;
+}
+
+.member_info_wrap {
+	margin: 30px;
+	width: 300px;
+	height: 300px;
+	background-color: #565cfb;
+	border-radius: 5px;
+	padding: 20px;
+	margin-top: 20px;
+	border: 1px solid;
+}
+
+.member_info_wrap2 {
+	background-color: white;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+}
+</style>
+</th:block>
+
+</head>
+<body>
+	<div layout:fragment="content">
+	
+		<div class="container2">
+			<div class="input1">
+				<h1>사이즈 추천</h1>
+			</div>
+			<div class="login">
+				<div class="member_info_wrap" style="line-height: 1">
+					<div class="member_info_wrap2">
+						<div style="width: 100%; height: 50%; padding: 10px">
+							<p>강하라</p>
+							<p>diehfkszld@naver.com</p>
+						</div>
+						<div
+							style="width: 100%; height: 40%; padding: 10px; display: flex">
+							<div>
+								<p>작성한 글</p>
+								<p>
+									<a href="">구매중인 중고거래</a>
+								</p>
+								<p>
+									<a href="">판매중인 중고거래</a>
+								</p>
+							</div>
+							<div>
+								<p>
+									<a href="#">N</a>
+								</p>
+							</div>
+						</div>
+						<a href="" style="font-weight: bold">로그아웃</a>
+					</div>
+				</div>
+			</div>
+			<div class="item1">
+				<img src="/images/img_size1.jpg" alt="" />
+			</div>
+			<div class="item3">
+				<button>가지고 있는 옷으로 측정</button>
+				<div class="input">
+					<button>회원 정보로 측정</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

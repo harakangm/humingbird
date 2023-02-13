@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+.container {  display: grid;
+  grid-template-columns: 0.7fr 1.4fr 1.5fr 0.7fr;
+  grid-template-rows: 0.2fr 0.5fr 0.1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  justify-items: center;
+  align-items: center;
+  grid-template-areas:
+    "login input1 input1 ."
+    "login item1 item3 ."
+    ". check check .";
+  height: 70%;
+}
+
+.input1 { grid-area: input1; }
+
+.login {
+  justify-self: end;
+  grid-area: login;
+}
+
+.item3 {  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  justify-self: start;
+  grid-area: item3;
+}
+
+.input { grid-area: 2 / 1 / 3 / 2; }
+
+.input2 { grid-area: 3 / 1 / 4 / 2; }
+
+.item1 {
+  justify-self: center;
+  align-self: center;
+  grid-area: item1;
+}
+
+.check { grid-area: check; }
+
+
+      .member_info_wrap {
+        margin: 30px;
+        width: 300px;
+        height: 300px;
+        background-color: #565cfb;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        border: 1px solid;
+      }
+
+      .member_info_wrap2 {
+        background-color: white;
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .item3 div {
+        padding-top: 30px;
+        font-size: 20px;
+        color: #565cfb;
+        font-weight: bold;
+      }
+
+      .item3 input {
+        height: 30px;
+        border-radius: 15px;
+      }
+
+      .submit {
+        width: 180px;
+        height: 70px;
+        font-size: 18px;
+        border-radius: 20px;
+        background: #565cfb;
+        color: white;
+      }
+</style>
+</th:block>
+
+</head>
+<body>
+	<div layout:fragment="content">
+	
+		    <form class="container">
+      <div class="input1"><h1>사이즈 추천</h1></div>
+      <div class="login">
+        <div class="member_info_wrap" style="line-height: 1">
+          <div class="member_info_wrap2">
+            <div style="width: 100%; height: 50%; padding: 10px">
+              <p>강하라</p>
+              <p>diehfkszld@naver.com</p>
+            </div>
+            <div style="width: 100%; height: 40%; padding: 10px; display: flex">
+              <div>
+                <p>작성한 글</p>
+                <p><a href="">구매중인 중고거래</a></p>
+                <p><a href="">판매중인 중고거래</a></p>
+              </div>
+              <div>
+                <p><a href="#">N</a></p>
+              </div>
+            </div>
+            <a href="" style="font-weight: bold">로그아웃</a>
+          </div>
+        </div>
+      </div>
+      <div class="item3">
+        <div><label>치수입력</label> <input type="text" /></div>
+        <div class="input"><label>치수입력</label> <input type="text" /></div>
+        <div class="input2"><label>치수입력</label> <input type="text" /></div>
+      </div>
+      <div class="item1">
+        <img src="/images/img_size1.jpg" alt="" />
+      </div>
+      <div class="check">
+        <input type="submit" value="사이즈확인하기" class="submit" />
+      </div>
+    </form>
+		
+	</div>
+
+
+</body>
+</html>

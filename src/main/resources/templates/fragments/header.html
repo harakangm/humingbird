@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- th:fragment 다른 페이지에 포함시킬 영역을 만들어 준다. -->
+	<div th:fragment="header">
+
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid" style="margin: 0 auto">
+				<a class="navbar-brand" href="/"><img class="log"
+					src="/images/logo.png" alt="로고" /></a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-md-auto mb-2 mb-lg-2">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/newItem/newItemView" style="font-size: 40px">신상정보</a></li>
+						<li class="nav-item" ><a class="nav-link active"
+							aria-current="page" href="#" style="font-size: 40px">세일정보</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="#" style="font-size: 40px">중고거래</a></li>
+					</ul>
+					<form class="d-flex">
+						<input class="form-control me-2" type="search"
+							placeholder="Search" aria-label="Search" />
+						<button class="btn btn-outline-success" type="submit">
+							Search</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+	</div>
+</body>
+</html>
