@@ -18,6 +18,7 @@ public class NewItemImgDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
+	//맵핑해줌
 	public static NewItemImgDto of(NewItemImg itemImg) {
 		return modelMapper.map(itemImg, NewItemImgDto.class);
 	}

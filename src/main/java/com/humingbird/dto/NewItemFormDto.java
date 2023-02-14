@@ -1,6 +1,7 @@
 package com.humingbird.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,13 +34,14 @@ public class NewItemFormDto {
 	@NotNull(message = "가격은 필수 입력 값입니다.")
 	private int price;
 	
-	private ArrayList<TopNewItemDto> topNewItemDtoList = new ArrayList<>();
 	
-	private ArrayList<BottomNewItemDto> bottomNewItemDtoList = new ArrayList<>();
+	private List<TopNewItemDto> topNewItemDtoList = new ArrayList<>();
 	
-	private ArrayList<OuterNewItemDto> outerNewItemDtoList = new ArrayList<>();
+	private List<BottomNewItemDto> bottomNewItemDtoList = new ArrayList<>();
+	
+	private List<OuterNewItemDto> outerNewItemDtoList = new ArrayList<>();
 		
-	private ArrayList<NewItemImgDto> NewItemImgDtoList = new ArrayList<>();
+	private List<NewItemImgDto> NewItemImgDtoList = new ArrayList<>();
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
